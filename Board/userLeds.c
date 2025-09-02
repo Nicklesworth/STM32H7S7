@@ -1,9 +1,7 @@
 /* SPDX-License-Identifier: Unlicense */
 
-#include <assert.h>
 #include "userLeds.h"
-#include "main.h"
-#include "stm32h7rsxx_hal_gpio.h"
+#include "stm32.h"
 
 typedef struct
 {
