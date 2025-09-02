@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "common.h"
+#include "userLeds.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -102,6 +103,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    ticksDelay(msToTicks(250));
+    userLedSet(USER_LED_1, true);
+    ticksDelay(msToTicks(250));
+    userLedSet(USER_LED_1, false);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
