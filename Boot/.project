@@ -32,6 +32,16 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Board</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Board</locationURI>
+		</link>
+		<link>
+			<name>Common</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Common</locationURI>
+		</link>
+		<link>
 			<name>Drivers/STM32H7RSxx_HAL_Driver/stm32h7rsxx_hal.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Drivers/STM32H7RSxx_HAL_Driver/Src/stm32h7rsxx_hal.c</locationURI>
