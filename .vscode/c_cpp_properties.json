@@ -1,0 +1,20 @@
+{
+	"configurations": [
+		{
+			"name": "STM32",
+			"includePath": [
+				"${workspaceFolder}/**"
+			],
+			"defines": [
+				"_DEBUG",
+				"STM32H7S7xx",
+				"USE_HAL_DRIVER"
+			],
+			"compilerPath": "arm-none-eabi-gcc",
+			"cStandard": "c11",
+			"cppStandard": "c++17",
+			"intelliSenseMode": "gcc-arm"
+		}
+	],
+	"version": 4
+}
