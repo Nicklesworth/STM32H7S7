@@ -10,8 +10,11 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <stdio.h>
 #include "main.h"
 #include "timebase.h"
+
+#define EOL "\r\n"
 
 #ifdef __cplusplus
 }
