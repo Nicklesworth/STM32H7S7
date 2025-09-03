@@ -97,7 +97,7 @@ HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
   TimHandle.Instance = TIM6;
 
   /* Initialize TIMx peripheral as follow:
-  + Period = [uwTickFreq * (TIM_CNT_FREQ/TIM_FREQ) - 1]. to have a (uwTickFreq/TIM_FREQ) s time base.
+  + Period = 0xFFFF for full rollover
   + Prescaler = (uwTimclock/TIM_CNT_FREQ - 1) to have a TIM_CNT_FREQ counter clock.
   + ClockDivision = 0
   + Counter direction = Up
@@ -164,8 +164,7 @@ void HAL_ResumeTick(void)
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM6 interrupt took place, inside
-  * HAL_TIM6_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
+  * HAL_TIM6_IRQHandler().
   * @param  htim TIM handle
   * @retval None
   */
