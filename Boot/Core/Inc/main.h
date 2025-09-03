@@ -67,7 +67,8 @@ void Error_Handler(void);
 #define LED2_GPIO_Port GPIOO
 
 /* USER CODE BEGIN Private defines */
-
+extern XSPI_HandleTypeDef hxspi1;
+extern XSPI_HandleTypeDef hxspi2;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

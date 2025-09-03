@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "common.h"
+#include "psram.h"
 #include "userLeds.h"
 /* USER CODE END Includes */
 
@@ -113,6 +114,7 @@ int main(void)
   MX_XSPI2_Init();
   MX_XSPI1_Init();
   MX_EXTMEM_MANAGER_Init();
+
   /* USER CODE BEGIN 2 */
 
   printf("==========================" EOL);
@@ -120,6 +122,8 @@ int main(void)
   printf("Image: Bootloader" EOL);
   printf("CPU Frequency: %lu Hz" EOL, SystemCoreClock);
   printf("==========================" EOL);
+  printf("Initializing PSRAM..." EOL);
+  PSRAM_Init();
 
   /* USER CODE END 2 */
 
@@ -131,6 +135,7 @@ int main(void)
     userLedSet(USER_LED_1, true);
     ticksDelay(msToTicks(250));
     userLedSet(USER_LED_1, false);
+   
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
