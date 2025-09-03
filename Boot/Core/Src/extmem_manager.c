@@ -73,6 +73,6 @@ void MX_EXTMEM_MANAGER_Init(void)
   EXTMEM_Init(EXTMEMORY_1, HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_XSPI2));
 
   /* USER CODE BEGIN MX_EXTMEM_Init_PostTreatment */
-
+  EXTMEM_MemoryMappedMode(EXT_MEMORY_NOR_FLASH, EXTMEM_ENABLE);
   /* USER CODE END MX_EXTMEM_Init_PostTreatment */
 }
