@@ -174,7 +174,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOO_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOM, LED4_Pin|LED3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOM, LED4_Pin|LED3_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOO, LED1_Pin|LED2_Pin, GPIO_PIN_RESET);

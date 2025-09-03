@@ -17,7 +17,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32.h"
-
+#include "main.h"
 /** @addtogroup STM32H7RSxx_HAL_Driver
   * @{
   */
@@ -177,7 +177,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* Prevent unused argument(s) compilation warning */
   UNUSED(htim);
-
   ticks_upper++;
 }
 
