@@ -33,7 +33,7 @@
 */
 
 #define EXTMEM_DRIVER_NOR_SFDP   1
-#define EXTMEM_DRIVER_PSRAM      0
+#define EXTMEM_DRIVER_PSRAM      1
 #define EXTMEM_DRIVER_SDCARD     0
 #define EXTMEM_DRIVER_USER       0
 
@@ -53,6 +53,7 @@
 /* USER CODE END INCLUDE */
 /* Private variables ---------------------------------------------------------*/
 extern XSPI_HandleTypeDef hxspi2;
+extern XSPI_HandleTypeDef hxspi1;
 
 /* USER CODE BEGIN PV */
 
@@ -63,11 +64,13 @@ extern XSPI_HandleTypeDef hxspi2;
   * @{
   */
 enum {
-  EXTMEMORY_1  = 0 /*!< ID=0 for the first memory  */
+  EXTMEMORY_1  = 0, /*!< ID=0 for the first external memory  */
+  EXTMEMORY_2  = 1, /*!< ID=1 for the second external memory */
 };
 
 /* USER CODE BEGIN EC */
 #define EXT_MEMORY_NOR_FLASH  EXTMEMORY_1
+#define EXT_MEMORY_PSRAM      EXTMEMORY_2
 /* USER CODE END EC */
 
 /* Exported configuration --------------------------------------------------------*/
@@ -75,9 +78,9 @@ enum {
   * @{
   */
 
-extern EXTMEM_DefinitionTypeDef extmem_list_config[1];
+extern EXTMEM_DefinitionTypeDef extmem_list_config[2];
 #if defined(EXTMEM_C)
-EXTMEM_DefinitionTypeDef extmem_list_config[1];
+EXTMEM_DefinitionTypeDef extmem_list_config[2];
 #endif /* EXTMEM_C */
 
 /**
