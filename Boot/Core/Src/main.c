@@ -158,7 +158,16 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL1.PLLS = 2;
   RCC_OscInitStruct.PLL1.PLLT = 2;
   RCC_OscInitStruct.PLL1.PLLFractional = 0;
-  RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.PLL2.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL2.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL2.PLLM = 12;
+  RCC_OscInitStruct.PLL2.PLLN = 300;
+  RCC_OscInitStruct.PLL2.PLLP = 2;
+  RCC_OscInitStruct.PLL2.PLLQ = 2;
+  RCC_OscInitStruct.PLL2.PLLR = 2;
+  RCC_OscInitStruct.PLL2.PLLS = 3;
+  RCC_OscInitStruct.PLL2.PLLT = 2;
+  RCC_OscInitStruct.PLL2.PLLFractional = 0;
   RCC_OscInitStruct.PLL3.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
