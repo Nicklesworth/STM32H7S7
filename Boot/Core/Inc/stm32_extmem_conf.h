@@ -67,7 +67,7 @@ enum {
 };
 
 /* USER CODE BEGIN EC */
-
+#define EXT_MEMORY_NOR_FLASH  EXTMEMORY_1
 /* USER CODE END EC */
 
 /* Exported configuration --------------------------------------------------------*/

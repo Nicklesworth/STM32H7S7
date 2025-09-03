@@ -315,7 +315,7 @@ static void MX_XSPI2_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN XSPI2_Init 2 */
-
+  EXTMEM_MemoryMappedMode(EXT_MEMORY_NOR_FLASH, EXTMEM_ENABLE);
   /* USER CODE END XSPI2_Init 2 */
 
 }
