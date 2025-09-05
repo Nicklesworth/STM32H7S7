@@ -29,7 +29,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+#define RAM_TEST_SIZE 16384
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -75,6 +75,21 @@ int __io_putchar(int ch)
     return ch;
 }
 
+static uint32_t PSRAM_Test(void)
+{
+  uint8_t test_data[RAM_TEST_SIZE];
+  for(int i = 0; i < ARRAYSIZE(test_data); i++)
+    test_data[i] = i % 256;
+  memcpy((uint8_t*)XSPI1_BASE, test_data, ARRAYSIZE(test_data));
+  
+  HAL_Delay(1);
+
+  uint8_t read_data[16384] = {0};
+  memcpy(read_data, (uint8_t*)XSPI1_BASE, ARRAYSIZE(test_data));
+  
+  return memcmp(test_data, read_data, ARRAYSIZE(test_data));
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -114,7 +129,6 @@ int main(void)
   MX_XSPI2_Init();
   MX_XSPI1_Init();
   MX_EXTMEM_MANAGER_Init();
-
   /* USER CODE BEGIN 2 */
 
   printf("==========================" EOL);
@@ -124,6 +138,11 @@ int main(void)
   printf("==========================" EOL);
   printf("Initializing PSRAM..." EOL);
   PSRAM_Init();
+  printf("Testing PSRAM...");
+  if(PSRAM_Test() == 0)
+    printf("[PASS]" EOL);
+  else
+    printf("[FAIL]" EOL);
 
   /* USER CODE END 2 */
 
@@ -308,7 +327,7 @@ static void MX_XSPI1_Init(void)
   hxspi1.Init.ClockPrescaler = 0;
   hxspi1.Init.SampleShifting = HAL_XSPI_SAMPLE_SHIFT_NONE;
   hxspi1.Init.DelayHoldQuarterCycle = HAL_XSPI_DHQC_DISABLE;
-  hxspi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_8KB;
+  hxspi1.Init.ChipSelectBoundary = HAL_XSPI_BONDARYOF_2KB;
   hxspi1.Init.MaxTran = 0;
   hxspi1.Init.Refresh = 0;
   hxspi1.Init.MemorySelect = HAL_XSPI_CSSEL_NCS1;

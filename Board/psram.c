@@ -7,16 +7,9 @@
   
 /* Read Operations */
 #define READ_CMD                                0x00
-#define READ_LINEAR_BURST_CMD                   0x20
-#define READ_HYBRID_BURST_CMD                   0x3F
   
 /* Write Operations */
 #define WRITE_CMD                               0x80
-#define WRITE_LINEAR_BURST_CMD                  0xA0
-#define WRITE_HYBRID_BURST_CMD                  0xBF
-  
-/* Reset Operations */
-#define RESET_CMD                               0xFF
   
 /* Registers definition */
 #define MR0                                     0x00000000
@@ -31,8 +24,10 @@
 #define WRITE_REG_CMD                           0xC0
   
 /* Default dummy clocks cycles */
-#define DUMMY_CLOCK_CYCLES_READ                 4
-#define DUMMY_CLOCK_CYCLES_WRITE                4
+#define DUMMY_CLOCK_CYCLES_READ                 6
+#define DUMMY_CLOCK_CYCLES_WRITE                6
+
+#define READ_REG_LATENCY												5
 
 /**
 * @brief  Write mode register
@@ -85,7 +80,7 @@ uint32_t APS256_WriteReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t *Val
 * @param  LatencyCode Latency used for the access
 * @retval error status
 */
-uint32_t APS256_ReadReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t *Value, uint32_t LatencyCode)
+uint32_t APS256_ReadReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t *Value)
 {
   XSPI_RegularCmdTypeDef sCommand={0};
   
@@ -103,7 +98,7 @@ uint32_t APS256_ReadReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t *Valu
   sCommand.DataMode           = HAL_XSPI_DATA_8_LINES;
   sCommand.DataDTRMode        = HAL_XSPI_DATA_DTR_ENABLE;
   sCommand.DataLength         = 2;
-  sCommand.DummyCycles        = (LatencyCode - 1U);
+  sCommand.DummyCycles        = READ_REG_LATENCY;
   sCommand.DQSMode            = HAL_XSPI_DQS_ENABLE;
   
   /* Configure the command */
@@ -128,35 +123,10 @@ uint32_t APS256_ReadReg(XSPI_HandleTypeDef *Ctx, uint32_t Address, uint8_t *Valu
 */
 void PSRAM_Init(void)
 {
-  /* MR0 register for read and write */
-  uint8_t regW_MR0[2]={0x24,0x8D}; /* To configure AP memory Latency Type and drive Strength */
-  uint8_t regR_MR0[2]={0};
-  
-  /* MR8 register for read and write */
-  uint8_t regW_MR8[2]={0x4B,0x08}; /* To configure AP memory Burst Type */
+ /* MR8 register for read and write */
+  uint8_t regW_MR8[2]={0x4B,0x10}; /* x16, 2k burst, variable latency 7-14 for 200MHz, full drive strength*/
   uint8_t regR_MR8[2]={0};
-  
-  /*Read Latency */
-  uint8_t latency=6;
-  
-  /* Configure Read Latency and drive Strength */
-  if (APS256_WriteReg(&hxspi1, MR0, regW_MR0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  /* Check MR0 configuration */
-  if (APS256_ReadReg(&hxspi1, MR0, regR_MR0, latency ) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  
-  /* Check MR0 configuration */
-  if (regR_MR0 [0] != regW_MR0 [0])
-  {
-    Error_Handler() ;
-  }
-  
+ 
   /* Configure Burst Length */
   if (APS256_WriteReg(&hxspi1, MR8, regW_MR8) != HAL_OK)
   {
@@ -164,12 +134,32 @@ void PSRAM_Init(void)
   }
   
   /* Check MR8 configuration */
-  if (APS256_ReadReg(&hxspi1, MR8, regR_MR8, 6) != HAL_OK)
+  if (APS256_ReadReg(&hxspi1, MR8, regR_MR8) != HAL_OK)
   {
     Error_Handler();
   }
   
   if (regR_MR8[0] != regW_MR8[0])
+  {
+    Error_Handler() ;
+  }
+
+	/* MR8 register for read and write */
+  uint8_t regW_MR4[2]={0x20,0x4B}; /* 100000000 = latency of 7 for 200MHz, always 4x refresh, full array refresh */
+  uint8_t regR_MR4[2]={0};
+
+  if (APS256_WriteReg(&hxspi1, MR4, regW_MR4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  
+  /* Check MR4 configuration */
+  if (APS256_ReadReg(&hxspi1, MR4, regR_MR4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  
+  if (regR_MR4[0] != regW_MR4[0])
   {
     Error_Handler() ;
   }
