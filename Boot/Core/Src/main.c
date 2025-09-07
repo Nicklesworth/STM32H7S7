@@ -107,7 +107,6 @@ int main(void)
   MX_XSPI2_Init();
   MX_XSPI1_Init();
   MX_EXTMEM_MANAGER_Init();
-  
   /* USER CODE BEGIN 2 */
 
   printf("==========================" EOL);
