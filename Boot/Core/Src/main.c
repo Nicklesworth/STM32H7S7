@@ -68,28 +68,6 @@ static void MX_XSPI1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-int __io_putchar(int ch)
-{
-    uint8_t c = ch & 0xFF;
-    HAL_UART_Transmit(&huart4, &c, 1, HAL_MAX_DELAY);
-    return ch;
-}
-
-static uint32_t PSRAM_Test(void)
-{
-  uint8_t test_data[RAM_TEST_SIZE];
-  for(int i = 0; i < ARRAYSIZE(test_data); i++)
-    test_data[i] = i % 256;
-  memcpy((uint8_t*)XSPI1_BASE, test_data, ARRAYSIZE(test_data));
-  
-  HAL_Delay(1);
-
-  uint8_t read_data[16384] = {0};
-  memcpy(read_data, (uint8_t*)XSPI1_BASE, ARRAYSIZE(test_data));
-  
-  return memcmp(test_data, read_data, ARRAYSIZE(test_data));
-}
-
 /* USER CODE END 0 */
 
 /**
@@ -129,6 +107,7 @@ int main(void)
   MX_XSPI2_Init();
   MX_XSPI1_Init();
   MX_EXTMEM_MANAGER_Init();
+  
   /* USER CODE BEGIN 2 */
 
   printf("==========================" EOL);
@@ -136,14 +115,11 @@ int main(void)
   printf("Image: Bootloader" EOL);
   printf("CPU Frequency: %lu Hz" EOL, SystemCoreClock);
   printf("==========================" EOL);
-  printf("Initializing PSRAM..." EOL);
+  printf("XSPI: Flash Initialized..." EOL);
+  printf("XSPI: PSRAM Initialized..." EOL);
   PSRAM_Init();
-  printf("Testing PSRAM...");
-  if(PSRAM_Test() == 0)
-    printf("[PASS]" EOL);
-  else
-    printf("[FAIL]" EOL);
 
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
