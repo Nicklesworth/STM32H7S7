@@ -47,6 +47,7 @@
 #include "stm32h7rsxx_hal.h"
 #include "stm32_extmem.h"
 #include "stm32_extmem_type.h"
+#include "boot/stm32_boot_xip.h"
 
 /* USER CODE BEGIN INCLUDE */
 
@@ -65,6 +66,11 @@ extern XSPI_HandleTypeDef hxspi2;
 enum {
   EXTMEMORY_1  = 0 /*!< ID=0 for the first memory  */
 };
+
+/*
+  @brief management of the boot layer
+*/
+#define EXTMEM_MEMORY_BOOTXIP  EXTMEMORY_1
 
 /* USER CODE BEGIN EC */
 #define EXT_MEMORY_NOR_FLASH  EXTMEMORY_1
